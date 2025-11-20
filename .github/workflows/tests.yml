@@ -1,0 +1,48 @@
+# .github/workflows/tests.yml
+# ----------------------------
+
+name: Godot GDUnit Tests CI
+
+# 1. Definir cuándo se ejecutará el flujo de trabajo
+on:
+  push:
+    # Se ejecuta en cada push a la rama principal (main)
+    branches: [ "main" ]
+  pull_request:
+    # Se ejecuta en cada Pull Request a la rama principal
+    branches: [ "main" ]
+
+# 2. Definir los trabajos (jobs) a realizar
+jobs:
+  run_gdunit_tests:
+    # El trabajo se ejecuta en una máquina virtual de Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout Repository
+        # Paso 1: Descarga tu código fuente del repositorio
+        uses: actions/checkout@v4 
+
+      - name: ⚙️ Run GDUnit4 tests
+        # Paso 2: Usa la acción de la comunidad para manejar Godot y GDUnit4
+        uses: MikeSchulze/gdUnit4-action@v1 
+        with:
+          # Argumentos para el ejecutable de Godot:
+          # --headless: Crucial. Ejecuta Godot sin interfaz gráfica (CI/servidor)
+          godot_cli_options: '--headless'
+          # Argumentos para GDUnit:
+          # --report-junit: Genera el archivo XML de resultados que la web necesita
+          gdunit_cli_options: '--report-junit' 
+
+      - name: 📄 Publish Test Results
+        # Paso 3: Este paso toma el XML generado y lo muestra en la interfaz web
+        uses: dorny/test-reporter@v1
+        # 'if: always()' asegura que el reporte se genere incluso si las pruebas fallan
+        if: always() 
+        with:
+          name: GDUnit Tests Report
+          # Ubicación del archivo XML generado por GDUnit4
+          path: 'reports/gdunit4-report.xml' 
+          reporter: junit
+          # Añade comentarios de resultados al Pull Request
+          fail-on-error: 'true'

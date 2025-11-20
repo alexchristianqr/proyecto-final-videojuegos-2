@@ -159,7 +159,7 @@ func _physics_process(delta: float) -> void:
 		animation_player.play(animation)
 
 func get_new_animation(is_shooting := false) -> String:
-	var animation_new: String
+	var animation_new = "jumping"
 	if is_on_floor():
 		if absf(velocity.x) > 0.1:
 			animation_new = "run"

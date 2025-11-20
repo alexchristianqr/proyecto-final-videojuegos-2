@@ -37,6 +37,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 window/stretch/scale_mode="integer"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdunit4/plugin.cfg")
+
 [importer_defaults]
 
 texture={
