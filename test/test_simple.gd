@@ -1,6 +1,6 @@
-# ---------------------------------------------
-#            PRUEBAS DE VERIFICACIÓN SECUENCIAL
-# ---------------------------------------------
+# ----------------------------------
+# PRUEBAS DE VERIFICACIÓN SECUENCIAL
+# ----------------------------------
 
 extends GdUnitTestSuite
 
@@ -21,9 +21,7 @@ func test_03_array_contains():
 	# Verifica que un array contiene un elemento específico
 	var colors = ["red", "green", "blue"]
 	var expec : String = "red"
-
 	assert_bool(colors.has(expec)).is_true()
-
 
 func test_04_boolean_fail_check():
 	# Esta prueba fallará intencionalmente para ver cómo se reporta el error
